@@ -1,1 +1,2 @@
-# verified-linear-algebra
+Verified Linear Algebra
+=======================
