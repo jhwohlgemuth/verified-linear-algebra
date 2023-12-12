@@ -86,15 +86,10 @@ mod verification {
         let f: f64 = kani::any();
         let g: f64 = kani::any();
         let h: f64 = kani::any();
-        kani::assume(-limit < a && a < limit);
-        kani::assume(-limit < b && b < limit);
-        kani::assume(-limit < c && c < limit);
-        kani::assume(-limit < d && d < limit);
-        kani::assume(-limit < e && e < limit);
-        kani::assume(-limit < f && f < limit);
-        kani::assume(-limit < g && g < limit);
-        kani::assume(-limit < h && h < limit);
         let zero: Complex = Complex::new(0.0, 0.0);
+        for i in vec![a, b, c, d, e, f, g, h] {
+            kani::assume(-limit < i && i < limit);
+        }
         let x = vec![
             Complex::new(a, b),
             Complex::new(c, d),
@@ -119,14 +114,9 @@ mod verification {
         let g: f64 = kani::any();
         let h: f64 = kani::any();
         kani::assume(-limit < value && value < limit);
-        kani::assume(-limit < a && a < limit);
-        kani::assume(-limit < b && b < limit);
-        kani::assume(-limit < c && c < limit);
-        kani::assume(-limit < d && d < limit);
-        kani::assume(-limit < e && e < limit);
-        kani::assume(-limit < f && f < limit);
-        kani::assume(-limit < g && g < limit);
-        kani::assume(-limit < h && h < limit);
+        for i in vec![a, b, c, d, e, f, g, h] {
+            kani::assume(-limit < i && i < limit);
+        }
         let x = vec![
             Complex::new(a, b),
             Complex::new(c, d),
@@ -139,7 +129,38 @@ mod verification {
 
     #[kani::proof]
     fn two_norm_squared_triangle_inequality() -> bool {
-        assert!(true);
+        let limit = 4000.0;
+        let value: f64 = kani::any();
+        let a: f64 = kani::any();
+        let b: f64 = kani::any();
+        let c: f64 = kani::any();
+        let d: f64 = kani::any();
+        let e: f64 = kani::any();
+        let f: f64 = kani::any();
+        let g: f64 = kani::any();
+        let h: f64 = kani::any();
+        kani::assume(-limit < value && value < limit);
+        for i in vec![a, b, c, d, e, f, g, h] {
+            kani::assume(-limit < i && i < limit);
+        }
+        let x = vec![
+            Complex::new(a, b),
+            Complex::new(c, d),
+            Complex::new(e, f),
+            Complex::new(g, h),
+        ];
+        let y = vec![
+            Complex::new(a, b),
+            Complex::new(c, d),
+            Complex::new(e, f),
+            Complex::new(g, h),
+        ];
+        let sum: Vector = x
+            .iter()
+            .enumerate()
+            .map(|(index, element)| element.plus(&y[index]))
+            .collect();
+        two_norm_squared(sum) <= two_norm_squared(x) + two_norm_squared(y)
     }
 
     // #[kani::proof]
